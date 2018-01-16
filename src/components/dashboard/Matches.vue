@@ -59,33 +59,43 @@ export default {
     pageView() {
       const [from, to] = [
         (this.page - 1) * this.perPage,
-        ((this.page - 1) * this.perPage) + this.perPage,
+        (this.page - 1) * this.perPage + this.perPage,
       ];
       return this.relatedMatches.slice(from, to);
     },
     relatedMatches() {
       const filterBy = this.completed ? R.reject : R.filter;
-      const ifFilter = this.noFilter ? (() => R.identity) : filterBy;
+      const ifFilter = this.noFilter ? () => R.identity : filterBy;
       const ifSort = !this.sort
         ? R.identity
-        : R.sortWith([R.descend(R.prop('recommended')),
+        : R.sortWith([
+          R.descend(R.pipe(R.prop('enabled'), d => (d ? 1 : 0))),
+          R.descend(R.prop('recommended')),
           R.descend(R.pipe(R.prop('updated'), d => new Date(d).getTime())),
         ]);
       return R.pipe(
         ifFilter(R.propEq('status', 'SCHEDULED')),
         this.search(),
         R.uniqBy(({
-          status, home, visitor, isRematch, id,
-        }) => {
-          const pl = [home.user.id, visitor.user.id];
-          const uniqId = status + (isRematch ? '0' : '1') + R.sortBy(R.identity, pl).join(',');
+ status, rematch, isRematch, id 
+}) => {
+          const composedId = [id, rematch];
+          const uniqId =
+            status +
+            (isRematch ? '0' : '1') +
+            R.sortBy(R.identity, composedId).join(',');
           return uniqId;
         }),
         ifSort,
         R.take(this.size),
       )(this.contests);
     },
-    lPhrase() { return this.phrase.toLocaleLowerCase().split(' ').filter(R.identity); },
+    lPhrase() {
+      return this.phrase
+        .toLocaleLowerCase()
+        .split(' ')
+        .filter(R.identity);
+    },
     search() {
       if (!this.searchable || !this.phrase) {
         return R.identity;
@@ -104,10 +114,8 @@ export default {
         R.flatten,
         R.map(part => part.toLocaleLowerCase()),
       );
-      return R.pipe(R.filter(({ home, visitor }) => R.pipe(
-        prepareCompetitors,
-        constructPhrases,
-      )([home, visitor])));
+      return R.pipe(R.filter(({ home, visitor }) =>
+          R.pipe(prepareCompetitors, constructPhrases)([home, visitor]),),);
     },
   },
   watch: {
@@ -137,9 +145,9 @@ export default {
       }
     },
     checkFocus() {
-      const { contest } = (this.$route.query);
+      const { contest } = this.$route.query;
       if (contest) {
-        const found = (R.find(R.propEq('id', contest), this.relatedMatches));
+        const found = R.find(R.propEq('id', contest), this.relatedMatches);
         if (found) {
           this.modalScore(found);
           this.$emit('needFocus');
@@ -190,4 +198,3 @@ export default {
   padding: 0.25rem;
 }
 </style>
-
