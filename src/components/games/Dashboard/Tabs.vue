@@ -59,11 +59,3 @@ export default {
   methods: { focus(tab) { this.tab = tab; } },
 };
 </script>
-<style lang="scss">
-.b-tabs {
-  & > .tab-content {
-    overflow: visible;
-  }
-}
-</style>
-

@@ -3,7 +3,7 @@
     <b-table :data="game.table" striped :row-class="rowClass"
              @sort="currentSort" :default-sort="defaultSort">
       <template slot-scope="props" slot="header">
-        <b-tooltip :active="!!props.column.meta" :label="props.column.meta" dashed type="is-dark">
+        <b-tooltip :active="!!props.column.meta" :label="props.column.meta" position="is-bottom" multiline dashed type="is-dark">
           {{ props.column.label }}
         </b-tooltip>
       </template>
@@ -47,7 +47,7 @@
           {{ (props.row.balance > 0 ? '+'+props.row.balance : props.row.balance) }}
         </b-table-column>
         <b-table-column sortable field="scored" label="GS-GC"
-                        meta="Goals scored / Goals conceded" width="80" centered numeric>
+                        meta="Goals scored/conceded" width="80" centered numeric>
           {{ props.row.scored }}-{{ props.row.lost }}
         </b-table-column>
         <b-table-column sortable field="points" label="PTS"
