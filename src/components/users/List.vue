@@ -6,33 +6,37 @@
           <div class="columns">
             <div class="column is-narrow">
               <router-link :to="`/users/${id}`" class="is-center center-avatar">
-                <div class="avatar"> <img :src="meta.avatar_url" :alt="id + meta.name" /> </div>
+                <div class="avatar"> <img :src="meta.avatar_url" :alt="id + meta.name" > </div>
               </router-link>
               <b-taglist attached class="is-centered">
-                <b-tag :type="accessToClass(access)" class="is-marginless">{{access}}</b-tag>
-                <b-tag type="is-dark" class="is-marginless">{{id}}</b-tag>
+                <b-tag :type="accessToClass(access)" class="is-marginless">{{ access }}</b-tag>
+                <b-tag type="is-dark" class="is-marginless">{{ id }}</b-tag>
               </b-taglist>
             </div>
             <div class="column ">
               <p class="title">
-                <router-link :to="`/users/${id}`">{{meta.name}}</router-link>
+                <router-link :to="`/users/${id}`">{{ meta.name }}</router-link>
               </p>
               <div class="level" v-if="isAdmin && myId!==id">
-                <button @click="promote(id)" class="button is-size-7-mobile" :class="accessToClass(nextLevel(access))" v-if="access !== 'ADMIN'">
-                  <b-icon icon="arrow-up"></b-icon>
-                  <span>{{nextLevel(access)}}</span>
+                <button @click="promote(id)"
+                        class="button is-size-7-mobile"
+                        :class="accessToClass(nextLevel(access))"
+                        v-if="access !== 'ADMIN'">
+                  <b-icon icon="arrow-up"/>
+                  <span>{{ nextLevel(access) }}</span>
                 </button>
-                <button @click="demote(id)" class="button is-size-7-mobile" :class="accessToClass(previousLevel(access))" v-if="access !== 'NONE'">
-                  <b-icon icon="arrow-down"></b-icon>
-                  <span>{{previousLevel(access)}}</span>
+                <button @click="demote(id)"
+                        class="button is-size-7-mobile"
+                        :class="accessToClass(previousLevel(access))"
+                        v-if="access !== 'NONE'">
+                  <b-icon icon="arrow-down"/>
+                  <span>{{ previousLevel(access) }}</span>
                 </button>
               </div>
               <div v-else-if="isAdmin">
                 You cannot modify yourself access level.
               </div>
-              <div v-else>
-
-              </div>
+              <div v-else/>
             </div>
           </div>
         </div>
@@ -51,16 +55,20 @@ const findLevels = {
   previousLevel: lookupedLevel => levels[levels.indexOf(lookupedLevel) - 1],
 };
 export default {
-  name: 'users-list',
+  name: 'UsersList',
   data() {
-    return {
-      users: [],
-    };
+    return { users: [] };
   },
   computed: {
     ...mapGetters(['isAdmin', 'id', 'event']),
     myId() { return this.id; },
   },
+  watch: {
+    event({ type }) {
+      if (type === 'users') { this.refreshUsers(); }
+    },
+  },
+  mounted() { this.refreshUsers(); },
   methods: {
     ...findLevels,
     makeUserLevel(uid, modifier = R.identity) {
@@ -95,19 +103,7 @@ export default {
         default: return 'is-black';
       }
     },
-    refreshUsers() {
-      this.$api('GET', '/users').then((users) => { this.users = users; });
-    },
-  },
-  mounted() {
-    this.refreshUsers();
-  },
-  watch: {
-    event({ type }) {
-      if (type === 'users') {
-        this.refreshUsers();
-      }
-    },
+    refreshUsers() { this.$api('GET', '/users').then((users) => { this.users = users; }); },
   },
 };
 </script>

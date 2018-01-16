@@ -6,8 +6,8 @@
       </header>
       <header class="timeline-header" v-else>
         <span class="tag is-medium is-primary">
-          <span>{{ game.status === 'OPEN' ? "Now will be&nbsp;" : '' }}</span>
-          <span>{{ toPlay > 0 ? toPlay+' matches '+( game.status === 'ONGOING' ? 'left' : '' )+' in total' : 'Finished' }}</span>
+          <span>{{ game.status === 'OPEN' ? "So far will be&nbsp;" : '' }}</span>
+          <span>{{ header }}</span>
         </span>
       </header>
       <div class="timeline-item" v-if="toPlay > 0 && firstUpcoming">
@@ -20,10 +20,13 @@
           <p class="subtitle is-size-7">{{ user.name }}</p>
         </div>
       </div>
-      <PlayedMatch v-for="match in matches" :key="match.id" :match="match" :game="game" :matches="matches" />
+      <PlayedMatch v-for="match in matches"
+                   :key="match.id" :match="match" :game="game" :matches="matches" />
       <div class="timeline-item" />
       <header class="timeline-header">
-        <span class="tag is-medium is-primary">{{ game.status === 'OPEN' ? 'Will start soon' : 'Start' }}</span>
+        <span class="tag is-medium is-primary">
+          {{ game.status === 'OPEN' ? 'Will start soon' : 'Start' }}
+        </span>
       </header>
     </div>
   </div>
@@ -52,6 +55,11 @@ export default {
         )),
         R.values,
       )(this.game.schedule);
+    },
+    header() {
+      return this.toPlay > 0
+        ? `${this.toPlay} matches ${this.game.status === 'ONGOING' ? 'left' : ''} in total`
+        : 'Finished';
     },
     toPlay() {
       return (2 * (this.game.table.length - 1)) - this.matches.length;

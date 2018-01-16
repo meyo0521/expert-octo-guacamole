@@ -3,11 +3,21 @@
     <p class="title">Stats</p>
     <div class="rest">
       <div class="columns is-centered is-multiline is-mobile">
-        <StatsCircle text="W/D/L" :value="`${stats.wins}/${stats.draws}/${stats.loses}`" description="Wins / Draws / Loses" />
-        <StatsCircle text="GS/GC" :value="`${stats.scored}/${stats.lost}`" description="Goals scored / Goals conceded" />
-        <StatsCircle text="~GM" :value="average.scored" description="Average goals scored per match" />
-        <StatsCircle text="PL" :value="stats.played" description="Matches played" />
-        <StatsCircle text="WR" :value="`${(100*average.wins).toFixed(1)}%`" description="Win Rate" />
+        <StatsCircle text="W/D/L"
+                     :value="`${stats.wins}/${stats.draws}/${stats.loses}`"
+                     description="Wins / Draws / Loses" />
+        <StatsCircle text="GS/GC"
+                     :value="`${stats.scored}/${stats.lost}`"
+                     description="Goals scored / Goals conceded" />
+        <StatsCircle text="~GM"
+                     :value="average.scored"
+                     description="Average goals scored per match" />
+        <StatsCircle text="PL"
+                     :value="stats.played"
+                     description="Matches played" />
+        <StatsCircle text="WR"
+                     :value="`${(100*average.wins).toFixed(1)}%`"
+                     description="Win Rate" />
       </div>
     </div>
   </div>
@@ -26,16 +36,12 @@ const neededFields = zeroFill([
 const reduceToStats = (prev, curr) =>
   R.mapObjIndexed((value, key) => value + R.prop(key, curr), prev);
 export default {
+  name: 'GamesStats',
+  components: { StatsCircle },
   props: {
-    games: {
-      type: Object,
-      default: () => ({}),
-    },
-    userId: String,
-    size: {
-      type: Number,
-      default: 5,
-    },
+    games: { type: Object, default: () => ({}) },
+    userId: { type: String, required: true },
+    size: { type: Number, default: 5 },
   },
   computed: {
     doneMatches() {
@@ -65,8 +71,6 @@ export default {
       )(this.stats);
     },
   },
-  components: { StatsCircle },
-  name: 'games-stats',
 };
 </script>
 <style lang="scss" scoped>

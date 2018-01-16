@@ -1,23 +1,31 @@
 <template>
   <div>
     <b-field grouped>
-      <b-input expanded v-model="phrase" placeholder="Search..." type="search" icon-pack="fa" icon="search">
-      </b-input>
+      <b-input expanded v-model="phrase"
+               placeholder="Search..."
+               type="search"
+               icon="search"/>
       <b-switch v-if="hasDeepSearch" v-model="deep" type="is-gray">
         Deep search
       </b-switch>
     </b-field>
     <div v-if="done && data.length !== 0">
       <p class="columns is-multiline" v-if="simple">
-        <Simple :select="select" :selected.sync="selectedGame" class="column is-12" :club="club" v-for="club in data" :key="club.id" />
+        <Simple :select="select" :selected.sync="selectedGame"
+                class="column is-12"
+                :club="club" v-for="club in data"
+                :key="club.id" />
       </p>
       <p class="columns is-multiline" v-else>
-        <Complex :select="select" :selected.sync="selectedGame" class="column is-4" :club="club" v-for="club in data" :key="club.id" />
+        <Complex :select="select" :selected.sync="selectedGame"
+                 class="column is-4"
+                 :club="club" v-for="club in data"
+                 :key="club.id" />
       </p>
     </div>
     <div class=" has-text-centered " v-else-if="done && phrase && data.length===0 ">
       There is no results for your
-      <span class="is-bold ">{{phrase}}</span>
+      <span class="is-bold ">{{ phrase }}</span>
     </div>
     <div class="has-text-centered " v-else-if="phrase && !done">
       Your search is now handling.
@@ -32,7 +40,8 @@ import Simple from './Simple';
 import Complex from './Complex';
 
 export default {
-  name: 'clubs-search',
+  name: 'ClubsSearch',
+  components: { Simple, Complex },
   props: {
     'has-deep-search': { type: Boolean, default: true },
     simple: { type: Boolean, default: false },
@@ -49,7 +58,11 @@ export default {
       selectedGame: this.preselect || null,
     };
   },
-  components: { Simple, Complex },
+  watch: {
+    phrase() { this.doSearch(); },
+    deep() { this.doSearch(); },
+  },
+  mounted() { this.search(); },
   methods: {
     select(game) {
       if (this.selectedGame === game.id) {
@@ -75,17 +88,7 @@ export default {
       this.search();
     },
   },
-  watch: {
-    phrase() {
-      this.doSearch();
-    },
-    deep() {
-      this.doSearch();
-    },
-  },
-  mounted() {
-    this.search();
-  },
+
 };
 </script>
 <style lang="scss" scoped>

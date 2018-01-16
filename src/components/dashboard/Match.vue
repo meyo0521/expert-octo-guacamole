@@ -1,5 +1,6 @@
 <template>
-  <div class="columns match notification results is-primary-1" :class="!match.enabled ? 'disabled' : 'enabled'">
+  <div class="columns match notification results is-primary-1"
+       :class="!match.enabled ? 'disabled' : 'enabled'">
     <div class="column is-5 has-text-centered">
       <div class="title">{{ match.home.user.name }}</div>
       <div class="subtitle is-size-6">{{ match.home.club.name }}</div>
@@ -41,7 +42,6 @@
 </template>
 
 <script>
-import * as R from 'ramda';
 import { mapGetters } from 'vuex';
 
 export default {

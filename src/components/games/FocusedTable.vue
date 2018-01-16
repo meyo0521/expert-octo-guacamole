@@ -1,9 +1,9 @@
 <template>
   <div v-if="table && table.length > 0" class="in-table">
     <span v-if="title">
-      <p class="title">{{title}}</p>
+      <p class="title">{{ title }}</p>
       <p class="subtitle has-text-centered is-size-6">
-        <router-link :to="`/games/${game.id}`">{{game.name}}</router-link>
+        <router-link :to="`/games/${game.id}`">{{ game.name }}</router-link>
       </p>
     </span>
     <table class="table is-fullwidth is-stripped">
@@ -14,27 +14,32 @@
         <th class="is-narrow">PTS</th>
       </thead>
       <tbody>
-        <tr v-for="({id, position, points, played, aClass=''},index) in focusedTable" :key="id" :class="aClass">
-          <td>{{position === 'no-position' || (focusedTable[index-1] || {}).position === position ? '' : position+'.'}}</td>
+        <tr v-for="({id, position, points, played, aClass=''},index) in focusedTable"
+            :key="id"
+            :class="aClass">
+          <td>
+            {{ position === 'no-position' || (focusedTable[index-1] || {}).position === position
+            ? '' : position+'.' }}
+          </td>
           <td class="player">
             <router-link v-if="aClass !== 'empty-row'" :to="`/users/${id}`">
-              {{player(id)}}
+              {{ player(id) }}
             </router-link>
-            <span v-else>{{player(id)}}</span>
+            <span v-else>{{ player(id) }}</span>
           </td>
-          <td class="has-text-centered">{{played}}</td>
-          <td class="has-text-centered">{{points}}</td>
+          <td class="has-text-centered">{{ played }}</td>
+          <td class="has-text-centered">{{ points }}</td>
         </tr>
       </tbody>
     </table>
   </div>
-</template> 
+</template>
 
 <script>
 import * as R from 'ramda';
 
 export default {
-  name: 'games-list',
+  name: 'GamesList',
   props: {
     game: { type: Object, default: R.always({}) },
     focus: { type: String, default: null },
@@ -75,7 +80,8 @@ export default {
             R.identity,
             (n) => {
               if ((length - to) === 1) {
-                return n.concat(R.last(this.table)); // if only one left attach him, instead of naive empty-row
+                // if only one left attach him, instead of empty-row
+                return n.concat(R.last(this.table));
               }
               return n.concat({ aClass: 'empty-row', position: 'no-position', id: `${length - to} players more` });
             },

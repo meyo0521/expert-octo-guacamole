@@ -1,8 +1,11 @@
 <template>
   <div>
     <div v-if="isLogged" class="nav">
-      <div @click="$router.push(`/games/${game.id}`)" v-for="game in lastGames" :key="game.id">
-        <button class="button  is-outlined is-warning" type="is-primary">{{ game.short || game.name }}</button>
+      <div @click="$router.push(`/games/${game.id}`)"
+           v-for="game in lastGames"
+           :key="game.id">
+        <button class="button is-outlined is-warning"
+                type="is-primary">{{ game.short || game.name }}</button>
       </div>
     </div>
   </div>

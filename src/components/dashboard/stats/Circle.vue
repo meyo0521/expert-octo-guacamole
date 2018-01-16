@@ -1,18 +1,18 @@
 <template>
   <div class="column is-narrow">
     <b-tooltip :label="description" position="is-top">
-      <div class="circle" :data-title="text" :data-value="value"> </div>
+      <div class="circle" :data-title="text" :data-value="value"/>
     </b-tooltip>
   </div>
 </template>
 <script>
 export default {
+  name: 'StatsCircle',
   props: {
-    text: String,
-    description: String,
-    value: [String, Number],
+    text: { type: String, required: true },
+    description: { type: String, required: true },
+    value: { type: [String, Number], default: '' },
   },
-  name: 'stats-circle',
 };
 </script>
 <style lang="scss" scoped>

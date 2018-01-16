@@ -43,8 +43,10 @@ export default {
   components: {
     Schedule, GameTable, FocusedTable, Competitors, Settings, Rules, Timeline, Results,
   },
+  props: {
+    game: { type: Object, required: true },
+  },
   data() { return { tab: 0 }; },
-  props: ['game', 'index'],
   computed: {
     ...mapGetters(['id', 'isAdmin', 'isMobile']),
     isCompetitor() {
@@ -57,3 +59,11 @@ export default {
   methods: { focus(tab) { this.tab = tab; } },
 };
 </script>
+<style lang="scss">
+.b-tabs {
+  & > .tab-content {
+    overflow: visible;
+  }
+}
+</style>
+

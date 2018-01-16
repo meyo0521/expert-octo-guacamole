@@ -1,11 +1,14 @@
 <template>
   <div>
-    <article :class="selected === club.id ? 'is-selected' : ''" @click="select(club)" class="notification hover">
+    <article :class="selected === club.id ? 'is-selected' : ''"
+             @click="select(club)" class="notification hover">
       <div class="columns">
         <ClubEmblem :club="club.id" size="75" class="column is-2 is-hidden-mobile" />
         <div class="column is-6">
-          <div class="title has-text-centered">{{club.name}}</div>
-          <div class="subtitle is-size-6 has-text-centered">{{club.division}}, {{club.country}}</div>
+          <div class="title has-text-centered">{{ club.name }}</div>
+          <div class="subtitle is-size-6 has-text-centered">
+            {{ club.division }}, {{ club.country }}
+          </div>
         </div>
         <div class="column is-4">
           <Stars :stars="club.stars" class="has-text-centered" />
@@ -13,7 +16,7 @@
             <div class="is-inline-block">
               <b-taglist attached>
                 <b-tag type="is-dark">score</b-tag>
-                <b-tag type="is-info">{{club.score}}</b-tag>
+                <b-tag type="is-info">{{ club.score }}</b-tag>
               </b-taglist>
             </div>
           </div>
@@ -28,12 +31,12 @@ import ClubEmblem from './ClubEmblem';
 import Stars from './Stars';
 
 export default {
+  name: 'SimpleClub',
   components: { ClubEmblem, Stars },
-  name: 'simple-club',
   props: {
     club: { type: Object, default: () => {}, required: true },
     select: { type: Function, default: () => {} },
-    selected: String,
+    selected: { type: String, default: null },
   },
 };
 </script>

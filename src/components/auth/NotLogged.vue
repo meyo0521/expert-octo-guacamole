@@ -34,19 +34,19 @@ export default {
       return this.$route.query.redirect;
     },
   },
-  methods: {
-    redirectIfNeeded(newValue) {
-      if ((newValue || this.isLogged) && this.redirect) {
-        this.$router.push(this.redirect);
-      }
+  watch: {
+    isLogged(isLoggedNow) {
+      this.redirectIfNeeded(isLoggedNow);
     },
   },
   created() {
     this.redirectIfNeeded();
   },
-  watch: {
-    isLogged(isLoggedNow) {
-      this.redirectIfNeeded(isLoggedNow);
+  methods: {
+    redirectIfNeeded(newValue) {
+      if ((newValue || this.isLogged) && this.redirect) {
+        this.$router.push(this.redirect);
+      }
     },
   },
 };

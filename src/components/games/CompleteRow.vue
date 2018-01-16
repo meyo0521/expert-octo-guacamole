@@ -3,21 +3,20 @@
     <div class="column is-3">
       <b-field>
         <b-select placeholder="From" v-model="from" expanded @input="validate()">
-          <option :value="a" v-for="a in game.competitorsSize" :key="a">{{a}}</option>
+          <option :value="a" v-for="a in game.competitorsSize" :key="a">{{ a }}</option>
         </b-select>
       </b-field>
     </div>
     <div class=" column is-3 ">
       <b-field>
         <b-select placeholder="To" v-model="to" expanded @input="validate()">
-          <option :value="a" v-for="a in game.competitorsSize" :key="a">{{a}}</option>
+          <option :value="a" v-for="a in game.competitorsSize" :key="a">{{ a }}</option>
         </b-select>
       </b-field>
     </div>
     <div class="column is-4 ">
       <b-field>
-        <b-input placeholder="Name" v-model="name" expanded @input="validate()">
-        </b-input>
+        <b-input placeholder="Name" v-model="name" expanded @input="validate()"/>
       </b-field>
     </div>
     <div class="column is-2 ">
@@ -33,11 +32,14 @@
   </div>
 </template>
 <script>
-import * as R from 'ramda';
-
 export default {
-  props: ['game', 'data', 'isFirst', 'isLast'],
-  name: 'complete-row',
+  name: 'CompleteRow',
+  props: {
+    game: { type: Object, required: true },
+    data: { type: Object, required: true },
+    isFirst: { type: Boolean, required: true },
+    isLast: { type: Boolean, required: true },
+  },
   data() {
     return {
       ...this.data,

@@ -3,7 +3,7 @@
 </template>
 <script>
 export default {
-  name: 'club-sprites',
+  name: 'ClubSprites',
 };
 </script>
 <style lang="scss">

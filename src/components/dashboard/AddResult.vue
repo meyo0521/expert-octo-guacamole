@@ -1,11 +1,9 @@
 <template>
-  <div>
-
-  </div>
+  <div/>
 </template>
 <script>
 export default {
-  name: 'add-result',
+  name: 'AddResult',
 };
 </script>
 <style scoped>

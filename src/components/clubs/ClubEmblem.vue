@@ -6,8 +6,11 @@
 
 <script>
 export default {
-  name: 'club-emblem',
-  props: ['club', 'size'],
+  name: 'ClubEmblem',
+  props: {
+    club: { type: String, required: true },
+    size: { type: [String, Number], required: true },
+  },
   computed: {
     clubClass() {
       return `bg-club-${this.club}`;

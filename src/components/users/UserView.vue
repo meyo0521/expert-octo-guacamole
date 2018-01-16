@@ -10,9 +10,9 @@ import { mapGetters } from 'vuex';
 import Dashboard from '../dashboard/Dashboard';
 
 export default {
+  name: 'UsersView',
   components: { Dashboard },
-  name: 'users-view',
-  props: ['id'],
+  props: { id: { type: String, default: '' } },
   data() {
     return {
       profile: false,
@@ -21,15 +21,6 @@ export default {
   computed: {
     ...mapGetters(['isAdmin', 'event']),
   },
-  methods: {
-    load() {
-      this.$api('GET', `/users/${this.id}`).then((profile) => { this.profile = profile; });
-    },
-  },
-  mounted() {
-    this.load();
-  },
-
   watch: {
     event({ type, relate }) {
       if (type === 'users' && relate === this.id) {
@@ -37,6 +28,15 @@ export default {
       }
     },
   },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    load() {
+      this.$api('GET', `/users/${this.id}`).then((profile) => { this.profile = profile; });
+    },
+  },
+
 };
 </script>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="navigation has-text-centered" :class="menuVisible ? 'show' : ''">
     <div class="logo" @click="toggleMenu">
-      <img src="../../assets/premiersted.svg" />
+      <img src="../../assets/premiersted.svg" >
     </div>
     <span class="buttons" v-if="isLogged">
       <MenuButton text="Dashboard" icon="home" route="/dashboard" />
@@ -26,7 +26,7 @@ import { mapGetters, mapActions } from 'vuex';
 import MenuButton from './Button';
 
 export default {
-  name: 'nabvar',
+  name: 'Nabvar',
   components: { MenuButton },
   computed: {
     ...mapGetters(['isLogged', 'isAdmin', 'isUser', 'menuVisible']),
@@ -36,7 +36,7 @@ export default {
   },
 };
 </script>
- 
+
 <style lang="scss">
 @import "../../style/vars.scss";
 .logo {

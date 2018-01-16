@@ -6,8 +6,10 @@
           <div class="columns">
             <ClubEmblem :club="club.id" size="120" class="column is-2 is-hidden-touch" />
             <div class="column">
-              <div class="title has-text-centered">{{club.name}}</div>
-              <div class="subtitle is-size-6 has-text-centered">{{club.division}}, {{club.country}}</div>
+              <div class="title has-text-centered">{{ club.name }}</div>
+              <div class="subtitle is-size-6 has-text-centered">
+                {{ club.division }}, {{ club.country }}
+              </div>
               <Stars :stars="club.stars" class="has-text-centered" />
             </div>
           </div>
@@ -15,13 +17,13 @@
             <div class="is-inline-block">
               <b-taglist attached>
                 <b-tag type="is-dark">match</b-tag>
-                <b-tag :type="qualityToColor(club.quality)">{{club.quality}}</b-tag>
+                <b-tag :type="qualityToColor(club.quality)">{{ club.quality }}</b-tag>
               </b-taglist>
             </div>
             <div class="is-inline-block">
               <b-taglist attached>
                 <b-tag type="is-dark">score</b-tag>
-                <b-tag type="is-info">{{club.score}}</b-tag>
+                <b-tag type="is-info">{{ club.score }}</b-tag>
               </b-taglist>
             </div>
           </div>
@@ -38,12 +40,12 @@ import ClubEmblem from './ClubEmblem';
 import Stars from './Stars';
 
 export default {
+  name: 'ComplexClub',
   components: { ClubEmblem, Stars },
-  name: 'complex-club',
   props: {
     club: { type: Object, default: () => {}, required: true },
     select: { type: Function, default: () => {} },
-    selected: String,
+    selected: { type: String, default: null },
   },
   methods: {
     qualityToColor: cond([

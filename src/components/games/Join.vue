@@ -1,32 +1,36 @@
 <template>
   <div class="modal-card notification">
     <header class="modal-card-head">
-      <p class="title is-centered">{{title}}</p>
-      <p class="subtitle"> {{game.name}}, {{game.location}} </p>
+      <p class="title is-centered">{{ title }}</p>
+      <p class="subtitle"> {{ game.name }}, {{ game.location }} </p>
     </header>
     <section class="modal-card-body is-primary">
-      <Search :predata="change ? [change] : null" :preselect="change ? change.id : null" :has-deep-search="false" @selected="selected" simple :limit="21" />
+      <Search :predata="change ? [change] : null"
+              :preselect="change ? change.id : null"
+              :has-deep-search="false"
+              @selected="selected" simple :limit="21" />
     </section>
     <footer class="modal-card-foot">
       <button class="button is-danger" type="button" @click="$parent.close(false)">Cancel</button>
-      <button class="button is-warning is-pulled-right" @click="join" v-if="club && (!change || club.id !== change.id)">
+      <button class="button is-warning is-pulled-right"
+              @click="join"
+              v-if="club && (!change || club.id !== change.id)">
         {{ action }} {{ club.name }}
       </button>
     </footer>
   </div>
-</template> 
+</template>
 
 <script>
-import * as R from 'ramda';
 import Search from '@/components/clubs/Search';
 
 export default {
+  name: 'ModalJoin',
   components: { Search },
-  name: 'modal-join',
   props: {
-    gameId: String,
-    fullGame: Object,
-    id: String,
+    gameId: { type: String, default: '' },
+    fullGame: { type: Object, default: () => null },
+    id: { type: String, required: true },
     change: { type: Object, default: () => null },
   },
   data() {

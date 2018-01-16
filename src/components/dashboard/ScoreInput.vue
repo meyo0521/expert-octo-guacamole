@@ -2,18 +2,19 @@
   <div class="columns is-flex">
     <div class="column is-narrow">
       <button :disabled="score <= 0" @click="modify(-1)" class="button is-primary-2 is-large">
-        <b-icon icon="minus"></b-icon>
+        <b-icon icon="minus"/>
       </button>
     </div>
     <div class="column">
       <b-field :type="hasError()">
-        <b-input type="number" v-model="score" size="is-large" :readonly="!isAdmin" @input="validate()">
-        </b-input>
+        <b-input type="number" v-model="score" size="is-large"
+                 :readonly="!isAdmin"
+                 @input="validate()"/>
       </b-field>
     </div>
     <div class="column is-narrow">
       <button :disabled="score >= 999" @click="modify(+1)" class="button is-primary-2 is-large">
-        <b-icon icon="plus"></b-icon>
+        <b-icon icon="plus"/>
       </button>
     </div>
   </div>
@@ -23,8 +24,8 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'score-input',
-  props: ['initScore'],
+  name: 'ScoreInput',
+  props: { initScore: { type: Number, default: 0 } },
   data() {
     return {
       score: this.initScore || 0,

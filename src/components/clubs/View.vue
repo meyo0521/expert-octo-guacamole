@@ -7,7 +7,7 @@
 import Search from './Search';
 
 export default {
-  name: 'clubs-search-view',
+  name: 'ClubsSearchView',
   components: { Search },
 };
-</script> 
+</script>

@@ -2,39 +2,42 @@
   <div>
     <div class="columns is-multiline">
       <div class=" column is-4" v-for="{club, user} in game.competitors" :key="user.id">
-        <div class="notification is-primary is-flex" :class="promotion[user.id].length > 0 ? 'player-has-promotion' : ''">
+        <div class="notification is-primary is-flex"
+             :class="promotion[user.id].length > 0 ? 'player-has-promotion' : ''">
           <ClubEmblem :club="club.id" :size="isMobile ? 75 : 100" />
           <div class="is-expanded">
-            <div class="title is-size-6">{{user.name}}</div>
+            <div class="title is-size-6">{{ user.name }}</div>
             <div class="subtitle is-size-7">
-              <div>{{club.name}}</div>
+              <div>{{ club.name }}</div>
               <Stars :stars="club.stars" small class="club-stars" />
             </div>
             <a class="button is-primary-1 is-small" @click="$router.push(`/users/${user.id}`)">
-              <b-icon icon="dashboard"></b-icon>
+              <b-icon icon="dashboard"/>
               <span>Dashboard</span>
             </a>
-            <a class="button is-danger is-small" v-if="modifable(user)" @click="remove(user)">
-              <b-icon icon="remove"></b-icon>
+            <a class="button is-danger is-small" v-if="modifable(user)"
+               @click="remove(user)">
+              <b-icon icon="remove"/>
               <span>Remove</span>
             </a>
-            <a class="button is-warning is-small" v-if="modifable(user)" @click="change({user,club})">
-              <b-icon icon="refresh"></b-icon>
+            <a class="button is-warning is-small" v-if="modifable(user)"
+               @click="change({user,club})">
+              <b-icon icon="refresh"/>
               <span>Change</span>
             </a>
           </div>
           <div class="promoted">
             <b-taglist attached v-for="promo in promotion[user.id]" :key="promo.id">
               <b-tag type="is-dark">
-                <b-icon icon="star" />&nbsp;{{promo.name}}
+                <b-icon icon="star" />&nbsp;{{ promo.name }}
               </b-tag>
             </b-taglist>
           </div>
         </div>
       </div>
     </div>
-    <b-modal :active.sync="toChange" has-modal-card :canCancel="true">
-      <Join :fullGame="game" @joined="changed" :id="uid" :change="club" />
+    <b-modal :active.sync="toChange" has-modal-card :can-cancel="true">
+      <Join :full-game="game" @joined="changed" :id="uid" :change="club" />
     </b-modal>
   </div>
 </template>
@@ -47,9 +50,9 @@ import ClubEmblem from '@/components/clubs/ClubEmblem';
 import Join from '@/components/games/Join';
 
 export default {
+  name: 'GameCompetitors',
   components: { ClubEmblem, Stars, Join },
-  props: ['game'],
-  name: 'game-competitors',
+  props: { game: { type: Object, required: true } },
   data() {
     return {
       toChange: false,

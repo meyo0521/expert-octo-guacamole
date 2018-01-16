@@ -19,7 +19,7 @@ export default {
   props: {
     route: { type: String, default: '/' },
     icon: { type: String, default: 'asterisk' },
-    text: String,
+    text: { type: String, required: true },
     type: { type: String, default: 'is-iconized' },
   },
   methods: { ...mapActions(['hideMenu']) },

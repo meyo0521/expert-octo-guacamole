@@ -11,7 +11,8 @@
       <b-field label="ShortCode" :type="result ? 'is-danger' : ''" :message="result">
         <b-input v-model="properties.short" expanded minlength="3" />
       </b-field>
-      <b-field label="Custom color (#hex, rgba)" :type="result ? 'is-danger' : ''" :message="result">
+      <b-field label="Custom color (#hex, rgba)"
+               :type="result ? 'is-danger' : ''" :message="result">
         <b-input v-model="properties.color" expanded @keydown.enter.native="validate" />
       </b-field>
       <b-field label="Location">

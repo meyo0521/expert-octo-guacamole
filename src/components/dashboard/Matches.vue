@@ -3,17 +3,21 @@
     <p class="title" v-if="title">{{ title }}</p>
     <div v-if="searchable">
       <b-field grouped>
-        <b-input expanded v-model="phrase" placeholder="Search for match..." type="search" icon-pack="fa" icon="search" />
+        <b-input expanded v-model="phrase"
+                 placeholder="Search for match..." type="search" icon-pack="fa" icon="search" />
       </b-field>
     </div>
     <div class="notification" v-if="relatedMatches.length > perPage">
-      <b-pagination :total="relatedMatches.length" :current.sync="page" :is-simple="true" :per-page="perPage" />
+      <b-pagination :total="relatedMatches.length"
+                    :current.sync="page" :is-simple="true" :per-page="perPage" />
     </div>
     <div v-if="relatedMatches.length">
-      <div v-for="match in pageView" :key="match.id" @click="match.enabled ? modalScore(match) : ()=>{}">
+      <div v-for="match in pageView"
+           :key="match.id" @click="match.enabled ? modalScore(match) : ()=>{}">
         <Match :match="match" />
       </div>
-      <b-modal :active.sync="isSubmitActive" has-modal-card :can-cancel="true" @close="handle('close')">
+      <b-modal :active.sync="isSubmitActive"
+               has-modal-card :can-cancel="true" @close="handle('close')">
         <ModalScore :match="selectedMatch" @apply="game => handle('apply', game)" />
       </b-modal>
     </div>
@@ -37,7 +41,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    title: String,
+    title: { type: String, default: '' },
     completed: { type: Boolean, default: false },
     noFilter: { type: Boolean, default: false },
     searchable: { type: Boolean, default: false },
@@ -59,7 +63,7 @@ export default {
     pageView() {
       const [from, to] = [
         (this.page - 1) * this.perPage,
-        (this.page - 1) * this.perPage + this.perPage,
+        ((this.page - 1) * this.perPage) + this.perPage,
       ];
       return this.relatedMatches.slice(from, to);
     },
@@ -77,8 +81,8 @@ export default {
         ifFilter(R.propEq('status', 'SCHEDULED')),
         this.search(),
         R.uniqBy(({
- status, rematch, isRematch, id 
-}) => {
+          status, rematch, isRematch, id,
+        }) => {
           const composedId = [id, rematch];
           const uniqId =
             status +
@@ -115,7 +119,7 @@ export default {
         R.map(part => part.toLocaleLowerCase()),
       );
       return R.pipe(R.filter(({ home, visitor }) =>
-          R.pipe(prepareCompetitors, constructPhrases)([home, visitor]),),);
+        R.pipe(prepareCompetitors, constructPhrases)([home, visitor])));
     },
   },
   watch: {
@@ -152,7 +156,7 @@ export default {
           this.modalScore(found);
           this.$emit('needFocus');
         } else {
-          console.log('focused but not found');
+          console.info(`focused but not found: ${contest}`);
         }
       }
     },

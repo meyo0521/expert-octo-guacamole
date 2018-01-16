@@ -2,17 +2,28 @@
   <div class="modal-card notification">
     <header class="modal-card-head">
       <p class="title is-centered">Completing a game</p>
-      <p class="subtitle"> {{game.name}}, {{game.location}} </p>
+      <p class="subtitle"> {{ game.name }}, {{ game.location }} </p>
     </header>
     <section class="modal-card-body  is-primary">
       <article>
-        <p>Completing a game is
-          <span class="has-text-weight-bold">irrevertable</span> operation! Create as many games as you want. </p>
+        <p>
+          Completing a game is <span class="has-text-weight-bold">irrevertable</span> operation!
+          Create as many games as you want.
+        </p>
         <p>In each games may appears the players from previous</p>
       </article>
       <p>&nbsp;</p>
       <div>
-        <CompleteRow :game="game" @data="d=>handle(index,d)" :isFirst="index===0" :isLast="index===newGames.length-1" :data=data v-for="(data, index) in newGames" :key="index" @remove="remove(index)" @add="add" />
+        <CompleteRow :game="game"
+                     :is-first="index===0"
+                     :is-last="index===newGames.length-1"
+                     :data="data"
+                     v-for="(data, index) in newGames"
+                     :key="index"
+                     @data="d=>handle(index,d)"
+                     @remove="remove(index)"
+                     @add="add"
+        />
       </div>
     </section>
     <footer class="modal-card-foot">
@@ -20,7 +31,7 @@
       <button class="button is-success is-pulled-right " @click="start ">Proceed complete</button>
     </footer>
   </div>
-</template> 
+</template>
 
 <script>
 import CompleteRow from './CompleteRow';
@@ -50,9 +61,6 @@ export default {
         .catch((err) => {
           this.$toast.open({ type: 'is-danger', message: err.response.text });
         });
-    },
-    selected(club) {
-      this.club = club;
     },
     handle(index, data) {
       this.newGames[index] = data;

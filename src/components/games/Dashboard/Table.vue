@@ -1,29 +1,58 @@
 <template>
   <div>
-    <b-table :data="game.table" striped :row-class="rowClass" @sort="currentSort" :default-sort="this.defaultSort">
+    <b-table :data="game.table" striped :row-class="rowClass"
+             @sort="currentSort" :default-sort="defaultSort">
+      <template slot-scope="props" slot="header">
+        <b-tooltip :active="!!props.column.meta" :label="props.column.meta" dashed type="is-dark">
+          {{ props.column.label }}
+        </b-tooltip>
+      </template>
+
       <template slot-scope="props">
-        <b-table-column sortable label="P" field="position" width="1" numeric>
+        <b-table-column sortable label="#" field="position" meta="Position" width="1" numeric>
           <span v-if="(props.index + 1) === props.row.position || !isDefaultSort">
             {{ props.row.position }}.
           </span>
         </b-table-column>
         <b-table-column label="Player">
           <div class="is-flex">
-            <router-link :to="`/users/${props.row.id}`"> {{user(props.row.id).name}} </router-link>
+            <router-link :to="`/users/${props.row.id}`">
+              {{ user(props.row.id).name }}
+            </router-link>
           </div>
         </b-table-column>
         <b-table-column label="Club">
           <div class="is-flex">
-            {{club(props.row.id).name}}
+            {{ club(props.row.id).name }}
           </div>
         </b-table-column>
-        <b-table-column sortable field="played" label=" PL " title="played" width=1 centered> {{props.row.played}}</b-table-column>
-        <b-table-column sortable field="wins" label="W " title="wins" class="is-hidden-mobile " width=1 centered numeric>{{props.row.wins}}</b-table-column>
-        <b-table-column sortable field="draws" label="D " title="draws" class="is-hidden-mobile " width=1 centered numeric>{{props.row.draws}}</b-table-column>
-        <b-table-column sortable field="loses" label="L " title="loses" class="is-hidden-mobile " width=1 centered numeric>{{props.row.loses}}</b-table-column>
-        <b-table-column sortable field="balance" label="B " title="balance" class="is-hidden-mobile " width=1 centered numeric>{{(props.row.balance > 0 ? '+'+props.row.balance : props.row.balance)}}</b-table-column>
-        <b-table-column sortable field="scored" label="GS-GC " title="scored" class="is-hidden-mobile " width=80 centered numeric>{{props.row.scored}}-{{props.row.lost}}</b-table-column>
-        <b-table-column sortable field="points" label="PTS " title="points" width=1 centered numeric>{{props.row.points}}</b-table-column>
+        <b-table-column sortable field="played" label="P"
+                        meta="Matches played" width="1" centered>
+          {{ props.row.played }}
+        </b-table-column>
+        <b-table-column sortable field="wins" label="W"
+                        meta="Matches won" width="1" centered numeric>
+          {{ props.row.wins }}
+        </b-table-column>
+        <b-table-column sortable field="draws" label="D"
+                        meta="Matches draw" width="1" centered numeric>
+          {{ props.row.draws }}
+        </b-table-column>
+        <b-table-column sortable field="loses" label="L"
+                        meta="Matches lost" width="1" centered numeric>
+          {{ props.row.loses }}
+        </b-table-column>
+        <b-table-column sortable field="balance" label="B "
+                        meta="Score balance" width="1" centered numeric>
+          {{ (props.row.balance > 0 ? '+'+props.row.balance : props.row.balance) }}
+        </b-table-column>
+        <b-table-column sortable field="scored" label="GS-GC"
+                        meta="Goals scored / Goals conceded" width="80" centered numeric>
+          {{ props.row.scored }}-{{ props.row.lost }}
+        </b-table-column>
+        <b-table-column sortable field="points" label="PTS"
+                        meta="Points" width="1" centered numeric>{{ props.row.points }}
+        </b-table-column>
       </template>
     </b-table>
   </div>
@@ -34,20 +63,20 @@ import { mapGetters } from 'vuex';
 import ClubEmblem from '../../clubs/ClubEmblem';
 
 export default {
+  name: 'GameTable',
   components: { ClubEmblem },
-  props: ['game'],
-  name: 'game-table',
-  computed: {
-    ...mapGetters(['id', 'isAdmin']),
-    isDefaultSort() {
-      return R.equals(this.defaultSort, R.values(this.sort));
-    },
-  },
+  props: { game: { type: Object, required: true } },
   data() {
     return {
       sort: { field: 'position', order: 'asc' },
       defaultSort: ['position', 'asc'],
     };
+  },
+  computed: {
+    ...mapGetters(['id', 'isAdmin']),
+    isDefaultSort() {
+      return R.equals(this.defaultSort, R.values(this.sort));
+    },
   },
   methods: {
     rowClass(row, index) {

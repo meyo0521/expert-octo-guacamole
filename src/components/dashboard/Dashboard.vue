@@ -21,7 +21,8 @@
           </span>
           <span v-else>
             <b-tabs>
-              <b-tab-item :label="game.name" v-for="game in focusedGame" :key="game.id" icon="list-ol">
+              <b-tab-item :label="game.name"
+                          v-for="game in focusedGame" :key="game.id" icon="list-ol">
                 <FocusedTable expanders :focus="id" :game="game" />
               </b-tab-item>
             </b-tabs>
@@ -32,12 +33,20 @@
     <div class="tile is-ancestor">
       <div class="tile is-6 is-parent ">
         <div class="tile is-child box notification is-primary">
-          <Matches title="Last Matches " :contests="profile.contests " @refresh="$emit('refresh')" completed :user-id="id" />
+          <Matches title="Last Matches "
+                   :contests="profile.contests "
+                   @refresh="$emit('refresh')"
+                   completed
+                   :user-id="id" />
         </div>
       </div>
       <div class="tile is-6 is-parent ">
         <div class="tile is-child box notification is-primary">
-          <Matches title="Upcoming " :contests="profile.contests" sort :user-id="id" @refresh="$emit('refresh')" />
+          <Matches title="Upcoming "
+                   :contests="profile.contests"
+                   sort
+                   :user-id="id"
+                   @refresh="$emit('refresh')" />
         </div>
       </div>
     </div>
@@ -54,7 +63,10 @@ import Stats from './stats/Stats';
 export default {
   name: 'Dashboard',
   components: { Matches, Stats, FocusedTable },
-  props: ['id', 'profile'],
+  props: {
+    id: { type: String, required: true },
+    profile: { type: Object, default: () => ({}) },
+  },
   computed: {
     ...mapGetters({ isLogged: 'isLogged', loggedId: 'id' }),
     focusedGame() {

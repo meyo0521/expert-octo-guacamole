@@ -8,7 +8,10 @@
         </b-checkbox>
       </div>
     </div>
-    <Matches no-filter :contests="filteredSchedule" searchable :size="filteredSchedule.length" @needFocus="$emit('needFocus')" @updateGame="(game) => $emit('updated', game)" />
+    <Matches no-filter :contests="filteredSchedule" searchable
+             :size="filteredSchedule.length"
+             @needFocus="$emit('needFocus')"
+             @updateGame="(game) => $emit('updated', game)" />
   </div>
 </template>
 <script>

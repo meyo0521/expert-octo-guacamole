@@ -6,8 +6,8 @@ import { mapGetters, mapActions } from 'vuex';
 import Dashboard from './Dashboard';
 
 export default {
+  name: 'DashboardView',
   components: { Dashboard },
-  name: 'dashboard-view',
   computed: { ...mapGetters(['id', 'myProfile']) },
   methods: { ...mapActions(['refreshProfile']) },
 };

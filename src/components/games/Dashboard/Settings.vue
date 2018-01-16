@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Properties :game="game" @submit='saveProperties' actionName="Update" title="Update properties" class="notification is-primary" />
+    <Properties :game="game" @submit="saveProperties"
+                action-name="Update"
+                title="Update properties" class="notification is-primary" />
     <div class="notification is-primary">
       <p class="title">Recreate Table</p>
       <a class="button is-info" @click="recreateTable">Recreate a table</a>
@@ -9,14 +11,13 @@
   </div>
 </template>
 <script>
-import * as R from 'ramda';
 import { mapGetters } from 'vuex';
 import Properties from '../Properties';
 
 export default {
+  name: 'GameSettings',
   components: { Properties },
-  props: ['game'],
-  name: 'game-settings',
+  props: { game: { type: Object, required: true } },
   computed: {
     ...mapGetters(['id', 'isAdmin']),
   },

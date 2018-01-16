@@ -7,9 +7,10 @@
 </template>
 <script>
 export default {
+  name: 'Stars',
   props: {
-    stars: Number,
-    small: Boolean,
+    stars: { type: Number, default: 5 },
+    small: { type: Boolean, default: false },
   },
   computed: {
     size() {
@@ -28,7 +29,6 @@ export default {
       return 'star-o';
     },
   },
-  name: 'stars',
 };
 </script>
 <style scoped lang="scss">

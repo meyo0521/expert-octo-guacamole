@@ -7,34 +7,52 @@
     <section class="modal-card-body is-primary">
       <div class="columns">
         <div class="column has-text-centered score-input">
-          <div class="title is-size-5 has-text-centered">{{match.home.user.name}}</div>
-          <div class="subtitle is-size-6">{{match.home.club.name}}</div>
-          <ScoreInput :initScore="score.home" @score="v => {score.home=v}" @isValid="v=> {valid.home = v}" />
+          <div class="title is-size-5 has-text-centered">{{ match.home.user.name }}</div>
+          <div class="subtitle is-size-6">{{ match.home.club.name }}</div>
+          <ScoreInput :init-score="score.home" @score="v => {score.home=v}"
+                      @isValid="v=> {valid.home = v}" />
         </div>
         <div class="column is-1 is-size-1 has-text-weight-bold has-text-centered score-separator">
-          {{ isMobile ? 'vs' : ':'}}
+          {{ isMobile ? 'vs' : ':' }}
         </div>
         <div class="column has-text-centered score-input" v-if="!isMobile">
-          <div class="title is-size-5 has-text-centered">{{match.visitor.user.name}}</div>
-          <div class="subtitle is-size-6">{{match.visitor.club.name}}</div>
-          <ScoreInput :initScore="score.visitor" @score="v => {score.visitor=v}" @isValid="v=> {valid.visitor = v}" />
+          <div class="title is-size-5 has-text-centered">{{ match.visitor.user.name }}</div>
+          <div class="subtitle is-size-6">{{ match.visitor.club.name }}</div>
+          <ScoreInput :init-score="score.visitor" @score="v => {score.visitor=v}"
+                      @isValid="v=> {valid.visitor = v}" />
         </div>
         <div class="column has-text-centered score-input" v-else>
-          <ScoreInput :initScore="score.visitor" @score="v => {score.visitor=v}" @isValid="v=> {valid.visitor = v}" />
-          <div class="subtitle is-size-6">{{match.visitor.club.name}}</div>
-          <div class="title is-size-5 has-text-centered">{{match.visitor.user.name}}</div>
+          <ScoreInput :init-score="score.visitor" @score="v => {score.visitor=v}"
+                      @isValid="v=> {valid.visitor = v}" />
+          <div class="subtitle is-size-6">{{ match.visitor.club.name }}</div>
+          <div class="title is-size-5 has-text-centered">{{ match.visitor.user.name }}</div>
         </div>
       </div>
       <p class="help is-warning has-text-centered" v-if="!isValid">How many goals you shot?</p>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-danger" @click="$parent.close(false)">Cancel</button>
-      <button class="button is-success is-pulled-right" v-if="isChangeable && isValid" @click="submit()">Submit</button>
-      <button class="button is-gold is-pulled-right" v-if="isAdmin && isChangeable && isValid" @click="submit('WALKOVER')">Walkover</button>
-      <button class="button is-warning is-pulled-right" v-if="isChangeable && isPlayed" @click="reject()">Reject</button>
+      <button class="button is-danger"
+              @click="$parent.close(false)">
+        Cancel
+      </button>
+      <button class="button is-success is-pulled-right"
+              v-if="isChangeable && isValid"
+              @click="submit()">
+        Submit
+      </button>
+      <button class="button is-gold is-pulled-right"
+              v-if="isAdmin && isChangeable && isValid"
+              @click="submit('WALKOVER')">
+        Walkover
+      </button>
+      <button class="button is-warning is-pulled-right"
+              v-if="isChangeable && isPlayed"
+              @click="reject()">
+        Reject
+      </button>
     </footer>
   </div>
-</template> 
+</template>
 
 <script>
 import * as R from 'ramda';
@@ -42,10 +60,10 @@ import { mapGetters } from 'vuex';
 import ScoreInput from './ScoreInput';
 
 export default {
+  name: 'ModalScore',
   components: { ScoreInput },
-  name: 'modal-score',
   props: {
-    match: { type: Object },
+    match: { type: Object, required: true },
   },
   data() {
     const result = R.path(['match', 'result'], this) || {};

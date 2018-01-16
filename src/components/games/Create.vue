@@ -7,8 +7,8 @@
 import Properties from './Properties';
 
 export default {
+  name: 'CreateGame',
   components: { Properties },
-  name: 'create-game',
   data() {
     return {
       newGame: {

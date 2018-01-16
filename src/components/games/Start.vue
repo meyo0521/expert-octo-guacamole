@@ -2,15 +2,16 @@
   <div class="modal-card notification">
     <header class="modal-card-head">
       <p class="title is-centered">Starting a game</p>
-      <p class="subtitle"> {{game.name}}, {{game.location}} </p>
+      <p class="subtitle"> {{ game.name }}, {{ game.location }} </p>
     </header>
     <section class="modal-card-body  is-primary">
       <article>
         Starting a game is
-        <span class="has-text-weight-bold">irrevertable</span> operataion!
+        <span class="has-text-weight-bold">irrevertable</span> operation!
       </article>
       <article>
-        By starting a game you agree that all of the competitors are on place. After this operation, no one can join to the game.
+        By starting a game you agree that all of the competitors are on place.
+        After this operation, no one can join to the game.
       </article>
     </section>
     <footer class="modal-card-foot">
@@ -19,12 +20,12 @@
       </button>
     </footer>
   </div>
-</template> 
+</template>
 
 <script>
 export default {
-  name: 'modal-start',
-  props: ['game'],
+  name: 'ModalStart',
+  props: { game: { type: Object, required: true } },
   methods: {
     start() {
       this.$api('POST', `games/${this.game.id}/schedule`)

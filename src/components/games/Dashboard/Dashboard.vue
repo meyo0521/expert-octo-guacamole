@@ -1,17 +1,26 @@
 <template>
   <div class="root" v-if="game">
-    <Navigation :game="game" @action="handle" :from="from" v-bind:style="{ backgroundColor: game.color  }" />
+    <Navigation :game="game"
+                @action="handle"
+                :from="from"
+                :style="{ backgroundColor: game.color }" />
     <div v-if="game.continueIn" class="notification">
-      <p>This games has been completed! Following games has been created as continuation of this one:</p>
+      <p>This games has been completed!
+      Following games has been created as continuation of this one:</p>
       <div v-for="following in game.continueIn" :key="following.id">
-        {{following.name}}
+        {{ following.name }}
       </div>
     </div>
     <Tabs :game="game" @action="handle" @updated="(d) => handle('updated',d)" />
-    <b-modal :active.sync="modal" has-modal-card :canCancel="true" @close="$router.push(`/games/${game.id}`)">
-      <Join v-if="modalType==='join'" :fullGame="game" @joined="(d) => handle('joined', d)" :id="id" />
-      <Start v-else-if="modalType==='start'" :game="game" @started="(d) => handle('started', d)" />
-      <Complete v-else-if="modalType==='complete'" :game="game" @completed="(d) => handle('completed', d)" />
+    <b-modal :active.sync="modal" has-modal-card
+             :can-cancel="true"
+             @close="$router.push(`/games/${game.id}`)">
+      <Join v-if="modalType==='join'" :full-game="game"
+            @joined="(d) => handle('joined', d)" :id="id" />
+      <Start v-else-if="modalType==='start'" :game="game"
+             @started="(d) => handle('started', d)" />
+      <Complete v-else-if="modalType==='complete'" :game="game"
+                @completed="(d) => handle('completed', d)" />
     </b-modal>
   </div>
 </template>
@@ -25,11 +34,11 @@ import Complete from '../Complete';
 import Tabs from './Tabs';
 
 export default {
+  name: 'GameDashboard',
   components: {
     Navigation, Join, Tabs, Start, Complete,
   },
-  props: ['gameId'],
-  name: 'game-dashboard',
+  props: { gameId: { type: String, required: true } },
   data() {
     return {
       game: null,
@@ -42,6 +51,14 @@ export default {
   computed: {
     ...mapGetters(['id', 'isAdmin', 'event']),
   },
+  watch: {
+    event({ type, relate }) {
+      if (type === 'games' && relate === this.game.id && (Date.now() - this.autoUpdated) > 1000) {
+        this.load();
+      }
+    },
+  },
+  mounted() { this.load(); },
   methods: {
     handle(action, data) {
       if (data) {
@@ -75,16 +92,6 @@ export default {
       this.$api('GET', `/games/${gameId || this.gameId}`).then((game) => { this.game = game; });
     },
   },
-  mounted() {
-    this.load();
-  },
-  watch: {
-    event({ type, relate }) {
-      if (type === 'games' && relate === this.game.id && (Date.now() - this.autoUpdated) > 1000) {
-        this.load();
-      }
-    },
-  },
   beforeRouteUpdate(to, from, next) {
     if (!R.pathEq(['game', 'id'], to.params.gameId, this)) {
       Object.assign(this.$data, this.$options.data());
@@ -93,8 +100,9 @@ export default {
     next();
   },
   beforeRouteEnter(to, from, next) {
+    const closeModal = (vm) => { vm.modalType = 'join'; vm.modal = true; }; // eslint-disable-line no-param-reassign
     const callback = R.cond([
-      [R.both(R.has('join'), () => to.fullPath.indexOf('?join') !== -1), R.always((vm) => { vm.modalType = 'join'; vm.modal = true; })],
+      [R.both(R.has('join'), () => to.fullPath.indexOf('?join') !== -1), R.always(closeModal)],
       [R.T, R.T],
     ])(to.query);
     next(callback);
