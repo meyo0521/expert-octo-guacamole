@@ -1,15 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import DashboardView from '@/components/dashboard/DashboardView';
-import NotLogged from '@/components/auth/NotLogged';
-import About from '@/components/auth/About';
-import Token from '@/components/auth/Token';
-import ClubsView from '@/components/clubs/View';
 
 import store from '../store';
 import games from './games';
 import auth from './auth';
 import users from './users';
+
+const DashboardView = () => import('@/components/dashboard/DashboardView');
+const NotLogged = () => import('@/components/auth/NotLogged');
+const About = () => import('@/components/auth/About');
+const Token = () => import('@/components/auth/Token');
+const ClubsView = () => import('@/components/clubs/View');
 
 Vue.use(Router);
 const router = new Router({

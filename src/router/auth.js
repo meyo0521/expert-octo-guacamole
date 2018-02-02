@@ -1,5 +1,5 @@
-import Login from '@/components/auth/Login';
-import Logout from '@/components/auth/Logout';
+const Login = () => import('@/components/auth/Login');
+const Logout = () => import('@/components/auth/Logout');
 
 export default [
   {

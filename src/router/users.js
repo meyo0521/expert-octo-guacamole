@@ -1,5 +1,5 @@
-import UsersList from '@/components/users/List';
-import UserView from '@/components/users/UserView';
+const UsersList = () => import('@/components/users/List');
+const UserView = () => import('@/components/users/UserView');
 
 export default [
   { path: '/users', component: UsersList, meta: { requiresAuth: true } },
