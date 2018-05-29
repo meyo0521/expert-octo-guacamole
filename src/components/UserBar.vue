@@ -17,7 +17,7 @@ import * as R from 'ramda';
 export default {
   name: 'Userbar',
   computed: {
-    ...mapGetters(['isLogged', 'avatar', 'username', 'id', 'myProfile']),
+    ...mapGetters(['isLogged', 'id', 'myProfile']),
     count() {
       return R.pipe(
         R.pickAll(['games', 'contests']),
@@ -47,11 +47,6 @@ export default {
   justify-content: space-between;
   div {
     align-content: space-between;
-  }
-  img.avatar {
-    width: auto;
-    height: 100%;
-    border-radius: 50%;
   }
 }
 </style>

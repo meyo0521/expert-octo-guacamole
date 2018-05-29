@@ -100,7 +100,7 @@ export default {
   methods: {
     player(id) {
       const { meta = {}, name } = this.indexedPlayers[id] || {};
-      return name || meta.name || meta.login || id;
+      return name || meta.displayName || meta.name || meta.login || id;
     },
   },
 };

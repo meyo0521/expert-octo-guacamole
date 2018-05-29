@@ -4,7 +4,7 @@
       <div class="tile is-12 is-parent">
         <div class="tile is-child box notification is-primary">
           <p v-if="loggedId === id" class="title">Your dashboard</p>
-          <p v-else class="title">{{ profile.meta.name }}'s dashboard</p>
+          <p v-else class="title">{{ profile.meta.displayName || profile.meta.name }}'s dashboard</p>
         </div>
       </div>
     </div>

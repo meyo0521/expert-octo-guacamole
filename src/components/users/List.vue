@@ -6,7 +6,7 @@
           <div class="columns">
             <div class="column is-narrow">
               <router-link :to="`/users/${id}`" class="is-center center-avatar">
-                <div class="avatar"> <img :src="meta.avatar_url" :alt="id + meta.name" > </div>
+                <div class="avatar"> <img :src="meta.avatar_url" :alt="id + ( meta.displayName || meta.name)" > </div>
               </router-link>
               <b-taglist attached class="is-centered">
                 <b-tag :type="accessToClass(access)" class="is-marginless">{{ access }}</b-tag>
@@ -15,7 +15,7 @@
             </div>
             <div class="column ">
               <p class="title">
-                <router-link :to="`/users/${id}`">{{ meta.name }}</router-link>
+                <router-link :to="`/users/${id}`">{{ meta.displayName || meta.name }}</router-link>
               </p>
               <div class="level" v-if="isAdmin && myId!==id">
                 <button @click="promote(id)"

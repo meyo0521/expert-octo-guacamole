@@ -11,6 +11,7 @@ const NotLogged = () => import('@/components/auth/NotLogged');
 const About = () => import('@/components/auth/About');
 const Token = () => import('@/components/auth/Token');
 const ClubsView = () => import('@/components/clubs/View');
+const SettingsView = () => import('@/components/settings/Index');
 
 Vue.use(Router);
 const router = new Router({
@@ -24,6 +25,7 @@ const router = new Router({
     { path: '/about', component: About },
     { path: '/token', component: Token },
     { path: '/dashboard', component: DashboardView, meta: { requiresAuth: true } },
+    { path: '/settings', component: SettingsView, meta: { requiresAuth: true } },
     { path: '/clubs', component: ClubsView, meta: { requiresAuth: true } },
     ...games,
     ...auth,

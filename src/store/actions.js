@@ -13,6 +13,8 @@ const exchangeToken = ({ state, dispatch }) => {
   });
 };
 
+const externalToken = ({ state }, returnUrl) => api(state)('POST', '/jwt/external', { returnUrl });
+
 const decodeToken = ({ commit, state }, token) => {
   const [, payload] = token.split('.');
   const {
@@ -35,6 +37,7 @@ export default {
   refreshProfile,
   exchangeToken,
   decodeToken,
+  externalToken,
   login({ dispatch }, token) {
     window.localStorage.setItem('TOKEN', token);
     dispatch('decodeToken', token);

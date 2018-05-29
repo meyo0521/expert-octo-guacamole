@@ -15,6 +15,6 @@ export default {
   notLoggedCause: state => state.notLoggedCause,
   username: (state, getters) => {
     const { profile } = getters;
-    return profile.display_name || profile.name || profile.email;
+    return profile.displayName || profile.name || profile.email;
   },
 };
