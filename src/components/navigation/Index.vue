@@ -10,7 +10,7 @@
       <MenuButton text="Clubs search" icon="futbol-o" route="/clubs" />
       <MenuButton text="Settings & My Profile" icon="cog" v-if="false" route="/settings" />
       <MenuButton text="Add League" icon="plus" route="/create" v-if="isAdmin" />
-      <MenuButton text="Settings" icon="cog" route="/settings" v-if="isAdmin" />
+      <MenuButton text="Settings" icon="cog" route="/settings" />
       <MenuButton text="About us" icon="info-circle" route="/about" />
       <MenuButton text="Logout" icon="sign-out" route="/logout" />
     </span>
